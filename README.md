@@ -21,11 +21,27 @@ http://localhost:8080/api/okopf
 
 ## Create a okopf resource
 
+
 ```
+POST http://localhost:8080/api/okopf
+
+example JSON:
+
 {
     "name": "Public joint stock companies",
     "code": "12247"
 }
+
+Response: 
+
+{
+    "id": 1,
+    "created": "2020-12-12 00:00:00.000",
+    "updated": null,
+    "name": "Public joint stock companies",
+    "code": "12247"
+}
+
 ```
 
 ## Create a client resource
