@@ -67,4 +67,41 @@ public class BankService {
             return getAll(PageRequest.of(page, size, Sort.Direction.ASC, "id"));
         }
     }
+
+    public List<BankDto> getAllSortedByParam(int page, int size, String sort, String name, String BIK) {
+        Pageable pageable;
+        if ("desc".equals(sort)) {
+            pageable = PageRequest.of(page, size, Sort.Direction.DESC, "id");
+            return getBankDtos(name, BIK, pageable);
+        } else {
+            pageable = PageRequest.of(page, size, Sort.Direction.ASC, "id");
+            return getBankDtos(name, BIK, pageable);
+        }
+    }
+
+    private List<BankDto> getBankDtos(String name, String BIK, Pageable pageable) {
+        if (name != null) {
+            return getAllByName(name, pageable);
+        } else if (BIK != null) {
+            return getAllByBIK(BIK, pageable);
+        } else {
+            return getAll(pageable);
+        }
+    }
+
+    private List<BankDto> getAllByName(String name, Pageable pageable) {
+        List<BankDto> result = new ArrayList<>();
+        repository.findAllByName(name, pageable).forEach(b -> {
+            result.add(mapper.toDto(b));
+        });
+        return result;
+    }
+
+    private List<BankDto> getAllByBIK(String BIK, Pageable pageable) {
+        List<BankDto> result = new ArrayList<>();
+        repository.findAllByBIK(BIK, pageable).forEach(b -> {
+            result.add(mapper.toDto(b));
+        });
+        return result;
+    }
 }

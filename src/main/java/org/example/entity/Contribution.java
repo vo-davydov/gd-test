@@ -79,23 +79,22 @@ public class Contribution extends AbstractEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
 
         Contribution that = (Contribution) o;
 
-        if (!openDate.equals(that.openDate)) return false;
-        if (!percent.equals(that.percent)) return false;
-        if (!periodInMonth.equals(that.periodInMonth)) return false;
+        if (openDate != null ? !openDate.equals(that.openDate) : that.openDate != null) return false;
+        if (percent != null ? !percent.equals(that.percent) : that.percent != null) return false;
+        if (periodInMonth != null ? !periodInMonth.equals(that.periodInMonth) : that.periodInMonth != null)
+            return false;
         if (client != null ? !client.equals(that.client) : that.client != null) return false;
         return bank != null ? bank.equals(that.bank) : that.bank == null;
     }
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + openDate.hashCode();
-        result = 31 * result + percent.hashCode();
-        result = 31 * result + periodInMonth.hashCode();
+        int result = openDate != null ? openDate.hashCode() : 0;
+        result = 31 * result + (percent != null ? percent.hashCode() : 0);
+        result = 31 * result + (periodInMonth != null ? periodInMonth.hashCode() : 0);
         result = 31 * result + (client != null ? client.hashCode() : 0);
         result = 31 * result + (bank != null ? bank.hashCode() : 0);
         return result;

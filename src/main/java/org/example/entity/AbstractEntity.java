@@ -67,32 +67,4 @@ public abstract class AbstractEntity implements Serializable {
         this.updated = updated;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        AbstractEntity that = (AbstractEntity) o;
-
-        if (!id.equals(that.id)) return false;
-        if (!created.equals(that.created)) return false;
-        return updated.equals(that.updated);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + created.hashCode();
-        result = 31 * result + updated.hashCode();
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "AbstractEntity{" +
-                "id=" + id +
-                ", created=" + created +
-                ", updated=" + updated +
-                '}';
-    }
 }

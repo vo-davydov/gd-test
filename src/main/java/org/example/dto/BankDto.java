@@ -2,21 +2,21 @@ package org.example.dto;
 
 import java.util.Set;
 
-public class BankDto extends AbstractDto{
+public class BankDto extends AbstractDto {
     private String name;
     private String BIK;
-    private Set<ContributionDto> contributionDto;
+    private Set<Long> contributionIds;
 
     public BankDto() {
 
     }
 
-    public Set<ContributionDto> getContributionDto() {
-        return contributionDto;
+    public Set<Long> getContributionIds() {
+        return contributionIds;
     }
 
-    public void setContributionDto(Set<ContributionDto> contributionDto) {
-        this.contributionDto = contributionDto;
+    public void setContributionIds(Set<Long> contributionIds) {
+        this.contributionIds = contributionIds;
     }
 
     public String getName() {

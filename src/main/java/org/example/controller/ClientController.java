@@ -43,9 +43,23 @@ public class ClientController {
 
     @GetMapping
     ResponseEntity<List<ClientDto>> getClients(@RequestParam(defaultValue = "0") int page,
-                                             @RequestParam(defaultValue = "10") int size,
-                                             @RequestParam(defaultValue = "desc") String sort
+                                               @RequestParam(defaultValue = "10") int size,
+                                               @RequestParam(defaultValue = "desc") String sort
     ) {
         return new ResponseEntity<>(service.getAllSorted(page, size, sort), HttpStatus.OK);
+    }
+
+    @GetMapping("/search")
+    ResponseEntity<List<ClientDto>> getClientsBy(@RequestParam(defaultValue = "0") int page,
+                                                 @RequestParam(defaultValue = "10") int size,
+                                                 @RequestParam(defaultValue = "desc") String sort,
+                                                 @RequestParam(required = false) Integer okopf,
+                                                 @RequestParam(required = false) String name,
+                                                 @RequestParam(required = false) String inn,
+                                                 @RequestParam(required = false) String shortName,
+                                                 @RequestParam(required = false) String address
+
+    ) {
+        return new ResponseEntity<>(service.getAllSortedByParam(page, size, sort, okopf, name, inn, shortName, address), HttpStatus.OK);
     }
 }

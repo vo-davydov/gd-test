@@ -35,7 +35,7 @@ public class Client extends AbstractEntity {
         return okopf;
     }
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "client")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
     public Set<Contribution> getContributions() {
         return contributions;
     }

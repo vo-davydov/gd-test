@@ -1,5 +1,6 @@
 package org.example.service;
 
+import org.example.dto.ClientDto;
 import org.example.dto.ContributionDto;
 import org.example.mapper.ContributionMapper;
 import org.example.repository.ContributionRepository;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,6 +73,73 @@ public class ContributionService {
         } else {
             return getAll(PageRequest.of(page, size, Sort.Direction.ASC, "id"));
         }
+    }
+
+    public List<ContributionDto> getAllSortedByParam(int page, int size, String sort, Date openDate, Double percent, Integer periodInMonth, int clientId, int bankId) {
+        Pageable pageable;
+        if ("desc".equals(sort)) {
+            pageable = PageRequest.of(page, size, Sort.Direction.DESC, "id");
+            return getContributionDtos(openDate, percent, periodInMonth, clientId, bankId, pageable);
+        } else {
+            pageable = PageRequest.of(page, size, Sort.Direction.ASC, "id");
+            return getContributionDtos(openDate, percent, periodInMonth, clientId, bankId, pageable);
+        }
+    }
+
+    private List<ContributionDto> getContributionDtos(Date openDate, Double percent, Integer periodInMonth, Integer clientId, Integer bankId, Pageable pageable) {
+        if (openDate != null) {
+            return getAllByOpenDate(openDate, pageable);
+        } else if (percent != null) {
+            return getAllByPercent(percent, pageable);
+        } else if (periodInMonth != null) {
+            return getAllByPeriodInMonth(periodInMonth, pageable);
+        } else if (clientId != null) {
+            return getAllByClientId(clientId, pageable);
+        } else if (bankId != null) {
+            return getAllByBankId(bankId, pageable);
+        } else {
+            return getAll(pageable);
+        }
+    }
+
+    private List<ContributionDto> getAllByOpenDate(Date openDate, Pageable pageable) {
+        List<ContributionDto> result = new ArrayList<>();
+        repository.findAllByOpenDate(openDate, pageable).forEach(c -> {
+            result.add(mapper.toDto(c));
+        });
+        return result;
+    }
+
+    private List<ContributionDto> getAllByPercent(Double percent, Pageable pageable) {
+        List<ContributionDto> result = new ArrayList<>();
+        repository.findAllByPercent(percent, pageable).forEach(c -> {
+            result.add(mapper.toDto(c));
+        });
+        return result;
+    }
+
+    private List<ContributionDto> getAllByPeriodInMonth(Integer periodInMonth, Pageable pageable) {
+        List<ContributionDto> result = new ArrayList<>();
+        repository.findAllByPeriodInMonth(periodInMonth, pageable).forEach(c -> {
+            result.add(mapper.toDto(c));
+        });
+        return result;
+    }
+
+    private List<ContributionDto> getAllByClientId(Integer clientId, Pageable pageable) {
+        List<ContributionDto> result = new ArrayList<>();
+        repository.findAllByClientId(clientId, pageable).forEach(c -> {
+            result.add(mapper.toDto(c));
+        });
+        return result;
+    }
+
+    private List<ContributionDto> getAllByBankId(Integer bankId, Pageable pageable) {
+        List<ContributionDto> result = new ArrayList<>();
+        repository.findAllByBankId(bankId, pageable).forEach(c -> {
+            result.add(mapper.toDto(c));
+        });
+        return result;
     }
 
 }

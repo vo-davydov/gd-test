@@ -1,13 +1,13 @@
 package org.example.controller;
 
 import org.example.dto.ContributionDto;
-import org.example.dto.OkopfDto;
 import org.example.service.ContributionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.util.List;
 
 @RequestMapping("/api/contribution")
@@ -16,7 +16,7 @@ public class ContributionController {
     private final ContributionService service;
 
     @Autowired
-    public ContributionController(ContributionService service){
+    public ContributionController(ContributionService service) {
         this.service = service;
     }
 
@@ -44,10 +44,24 @@ public class ContributionController {
 
     @GetMapping
     ResponseEntity<List<ContributionDto>> getContributions(@RequestParam(defaultValue = "0") int page,
-                                             @RequestParam(defaultValue = "10") int size,
-                                             @RequestParam(defaultValue = "desc") String sort
+                                                           @RequestParam(defaultValue = "10") int size,
+                                                           @RequestParam(defaultValue = "desc") String sort
     ) {
         return new ResponseEntity<>(service.getAllSorted(page, size, sort), HttpStatus.OK);
+    }
+
+    @GetMapping("/search")
+    ResponseEntity<List<ContributionDto>> getContributionsBy(@RequestParam(defaultValue = "0") int page,
+                                                             @RequestParam(defaultValue = "10") int size,
+                                                             @RequestParam(defaultValue = "desc") String sort,
+                                                             @RequestParam(required = false) Date openDate,
+                                                             @RequestParam(required = false) Double percent,
+                                                             @RequestParam(required = false) Integer periodInMonth,
+                                                             @RequestParam(required = false) int clientId,
+                                                             @RequestParam(required = false) int bankId
+
+    ) {
+        return new ResponseEntity<>(service.getAllSortedByParam(page, size, sort, openDate, percent, periodInMonth, clientId, bankId), HttpStatus.OK);
     }
 
 }

@@ -43,9 +43,19 @@ public class BankController {
 
     @GetMapping
     ResponseEntity<List<BankDto>> getBanks(@RequestParam(defaultValue = "0") int page,
-                                               @RequestParam(defaultValue = "10") int size,
-                                               @RequestParam(defaultValue = "desc") String sort
+                                           @RequestParam(defaultValue = "10") int size,
+                                           @RequestParam(defaultValue = "desc") String sort
     ) {
         return new ResponseEntity<>(service.getAllSorted(page, size, sort), HttpStatus.OK);
+    }
+
+    @GetMapping("/search")
+    ResponseEntity<List<BankDto>> getBanksBy(@RequestParam(defaultValue = "0") int page,
+                                             @RequestParam(defaultValue = "10") int size,
+                                             @RequestParam(defaultValue = "desc") String sort,
+                                             @RequestParam(required = false) String name,
+                                             @RequestParam(required = false) String BIK
+    ) {
+        return new ResponseEntity<>(service.getAllSortedByParam(page, size, sort, name, BIK), HttpStatus.OK);
     }
 }

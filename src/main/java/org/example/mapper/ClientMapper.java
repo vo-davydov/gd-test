@@ -1,9 +1,10 @@
 package org.example.mapper;
 
 import org.example.dto.ClientDto;
-import org.example.dto.ContributionDto;
 import org.example.entity.Client;
 import org.example.entity.Contribution;
+import org.example.service.ContributionService;
+import org.example.service.OkopfService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +16,15 @@ public class ClientMapper {
 
     @Autowired
     private ContributionMapper contributionMapper;
+
+    @Autowired
+    private ContributionService contributionService;
+
+    @Autowired
+    private OkopfService okopfService;
+
+    @Autowired
+    private OkopfMapper okopfMapper;
 
     public Client toEntity(ClientDto clientDto) {
         if (clientDto == null) {
@@ -28,11 +38,16 @@ public class ClientMapper {
         client.setInn(clientDto.getInn());
         client.setShortName(clientDto.getShortName());
         client.setAddress(clientDto.getAddress());
-        client.setOkopf(new OkopfMapper().toEntity(clientDto.getOkopfDto()));
-        if (clientDto.getContributionDto() != null) {
+
+        if (clientDto.getOkopfId() != null) {
+            client.setOkopf(okopfMapper.toEntity(okopfService.get(clientDto.getOkopfId())));
+        }
+        if (clientDto.getContributionIds() != null) {
             Set<Contribution> contributions = new HashSet<>();
-            clientDto.getContributionDto().forEach(c -> {
-                contributions.add(contributionMapper.toEntity(c));
+            clientDto.getContributionIds().forEach(c -> {
+                if (contributionService.get(c) != null) {
+                    contributions.add(contributionMapper.toEntity(contributionService.get(c)));
+                }
             });
             client.setContributions(contributions);
         }
@@ -51,11 +66,20 @@ public class ClientMapper {
         clientDto.setInn(client.getInn());
         clientDto.setShortName(client.getShortName());
         clientDto.setAddress(client.getAddress());
-        clientDto.setOkopfDto(new OkopfMapper().toDto(client.getOkopf()));
-        Set<ContributionDto> contributions = new HashSet<>();
-        client.getContributions().forEach(c -> {
-            contributions.add(contributionMapper.toDto(c));
-        });
+        clientDto.setCreated(client.getCreated());
+        clientDto.setUpdated(client.getUpdated());
+        if (client.getOkopf() != null) {
+            clientDto.setOkopfId(client.getOkopf().getId());
+        }
+
+        if (client.getContributions() != null) {
+            Set<Long> contributionIds = new HashSet<>();
+            client.getContributions().forEach(c -> {
+                contributionIds.add(c.getId());
+            });
+            clientDto.setContributionIds(contributionIds);
+        }
+
         return clientDto;
     }
 }

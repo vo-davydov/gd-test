@@ -1,10 +1,11 @@
 package org.example.mapper;
 
 import org.example.dto.BankDto;
-import org.example.dto.ClientDto;
 import org.example.entity.Bank;
-import org.example.entity.Client;
 import org.springframework.stereotype.Component;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Component
 public class BankMapper {
@@ -15,7 +16,6 @@ public class BankMapper {
         }
 
         Bank bank = new Bank();
-
         bank.setId(bankDto.getId());
         bank.setName(bankDto.getName());
         bank.setBIK(bankDto.getBIK());
@@ -29,10 +29,19 @@ public class BankMapper {
         }
 
         BankDto bankDto = new BankDto();
-
+        bankDto.setCreated(bank.getCreated());
+        bankDto.setUpdated(bank.getUpdated());
         bankDto.setId(bank.getId());
         bankDto.setName(bank.getName());
         bankDto.setBIK(bank.getBIK());
+
+        if (bank.getContributions() != null) {
+            Set<Long> contributionIds = new HashSet<>();
+            bank.getContributions().forEach(b -> {
+                contributionIds.add(b.getId());
+            });
+            bankDto.setContributionIds(contributionIds);
+        }
 
         return bankDto;
     }

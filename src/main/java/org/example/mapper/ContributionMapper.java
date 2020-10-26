@@ -39,7 +39,8 @@ public class ContributionMapper {
         }
 
         ContributionDto contributionDto = new ContributionDto();
-
+        contributionDto.setCreated(contribution.getCreated());
+        contributionDto.setUpdated(contribution.getUpdated());
         contributionDto.setId(contribution.getId());
         contributionDto.setOpenDate(contribution.getOpenDate());
         contributionDto.setPercent(contribution.getPercent());

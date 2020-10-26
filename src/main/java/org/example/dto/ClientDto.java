@@ -5,21 +5,21 @@ import java.util.Set;
 public class ClientDto extends AbstractDto {
     private String name;
     private String inn;
-    private OkopfDto okopfDto;
+    private Long okopfId;
     private String shortName;
     private String address;
-    private Set<ContributionDto> contributionDto;
+    private Set<Long> contributionIds;
 
     public ClientDto() {
 
     }
 
-    public Set<ContributionDto> getContributionDto() {
-        return contributionDto;
+    public Set<Long> getContributionIds() {
+        return contributionIds;
     }
 
-    public void setContributionDto(Set<ContributionDto> contributionDto) {
-        this.contributionDto = contributionDto;
+    public void setContributionIds(Set<Long> contributionIds) {
+        this.contributionIds = contributionIds;
     }
 
     public String getName() {
@@ -38,12 +38,12 @@ public class ClientDto extends AbstractDto {
         this.inn = inn;
     }
 
-    public OkopfDto getOkopfDto() {
-        return okopfDto;
+    public Long getOkopfId() {
+        return okopfId;
     }
 
-    public void setOkopfDto(OkopfDto okopfDto) {
-        this.okopfDto = okopfDto;
+    public void setOkopfId(Long okopfId) {
+        this.okopfId = okopfId;
     }
 
     public String getShortName() {
@@ -66,23 +66,27 @@ public class ClientDto extends AbstractDto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
 
         ClientDto clientDto = (ClientDto) o;
 
         if (name != null ? !name.equals(clientDto.name) : clientDto.name != null) return false;
         if (!inn.equals(clientDto.inn)) return false;
-        if (okopfDto != null ? !okopfDto.equals(clientDto.okopfDto) : clientDto.okopfDto != null) return false;
+        if (okopfId != null ? !okopfId.equals(clientDto.okopfId) : clientDto.okopfId != null) return false;
         if (shortName != null ? !shortName.equals(clientDto.shortName) : clientDto.shortName != null) return false;
-        return address != null ? address.equals(clientDto.address) : clientDto.address == null;
+        if (address != null ? !address.equals(clientDto.address) : clientDto.address != null) return false;
+        return contributionIds != null ? contributionIds.equals(clientDto.contributionIds) : clientDto.contributionIds == null;
     }
 
     @Override
     public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
+        int result = super.hashCode();
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + inn.hashCode();
-        result = 31 * result + (okopfDto != null ? okopfDto.hashCode() : 0);
+        result = 31 * result + (okopfId != null ? okopfId.hashCode() : 0);
         result = 31 * result + (shortName != null ? shortName.hashCode() : 0);
         result = 31 * result + (address != null ? address.hashCode() : 0);
+        result = 31 * result + (contributionIds != null ? contributionIds.hashCode() : 0);
         return result;
     }
 
@@ -91,9 +95,10 @@ public class ClientDto extends AbstractDto {
         return "ClientDto{" +
                 "name='" + name + '\'' +
                 ", inn='" + inn + '\'' +
-                ", okopfDto=" + okopfDto +
+                ", okopfId=" + okopfId +
                 ", shortName='" + shortName + '\'' +
                 ", address='" + address + '\'' +
+                ", contributionIds=" + contributionIds +
                 '}';
     }
 }

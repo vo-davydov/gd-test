@@ -23,7 +23,7 @@ public class Bank extends AbstractEntity {
         this.contributions = contributions;
     }
 
-    @OneToMany(mappedBy = "bank", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "bank", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     public Set<Contribution> getContributions() {
         return contributions;
     }
