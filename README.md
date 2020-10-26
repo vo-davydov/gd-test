@@ -94,7 +94,7 @@ Response:
     "inn": 7708004769,
     "shortName": "Exxon",
     "address": "Russia, 105066, Moscow st. Staraya Basmannaya 16, building 1a",
-    "okopfId": 
+    "okopfId": "okopfId"
 }
 ```
 
@@ -115,8 +115,8 @@ Response:
     "openDate": "2020-07-07",
     "percent": 8,
     "periodInMonth": 12,
-    "clientId": ,
-    "bankId": 
+    "clientId": "clientId",
+    "bankId": "bankId"
 }
 ```
 
