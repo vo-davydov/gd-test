@@ -2,13 +2,17 @@
 
 ## How to Run
 
-- Java 11
+- Java 8
 - Maven 3.6.3
 - PostgreSQL 10.10
 
+1. Create database GD (admin/adminka) or edit application.properties
+2. Download project
+3. In cli 'mvn spring-boot:run'
 
 ## About the Service
 
+It's simple REST test application.
 
 ## Get information about clients, banks, contributions, okopf.
 
@@ -98,6 +102,36 @@ Response:
 }
 ```
 
+## Update a client resource
+
+```
+PUT http://localhost:8080/api/client/{id}
+
+example JSON:
+
+{
+    "name": "Exxon M",
+    "inn": 7708004770,
+    "shortName": "ExxonM",
+    "address": "Russia",
+    "okopfId": "okopfId"
+}
+
+Response: 
+
+{
+    "id": "id",
+    "created": "2020-12-12 00:00:00.000",
+    "updated": "2020-12-12 00:10:00.000",
+    "name": "Exxon M",
+    "inn": 7708004770,
+    "shortName": "ExxonM",
+    "address": "Russia",
+    "okopfId": "okopfId"
+}
+
+```
+
 ## Create a bank resource
 
 ```
@@ -105,6 +139,30 @@ Response:
     "bik": "044525221",
     "name": "Chase Bank"
 }
+```
+
+## Update a bank resource
+
+```
+PUT http://localhost:8080/api/bank/{id}
+
+example JSON:
+
+{
+    "bik": "044525222",
+    "name": "Chase B"
+}
+
+Response: 
+
+{
+    "id": "id",
+    "created": "2020-12-12 00:00:00.000",
+    "updated": "2020-12-12 00:10:00.000",
+    "bik": "044525222",
+    "name": "Chase B"
+}
+
 ```
 
 ## Create a contribution resource
@@ -120,3 +178,32 @@ Response:
 }
 ```
 
+## Update a contribution resource
+
+```
+PUT http://localhost:8080/api/contribution/{id}
+
+example JSON:
+
+{
+    "openDate": "2020-07-07",
+    "percent": 8,
+    "periodInMonth": 60,
+    "clientId": "clientId",
+    "bankId": "bankId"
+}
+
+Response: 
+
+{
+    "id": "id",
+    "created": "2020-12-12 00:00:00.000",
+    "updated": "2020-12-12 00:10:00.000",
+    "openDate": "2020-07-07",
+    "percent": 8,
+    "periodInMonth": 60,
+    "clientId": "clientId",
+    "bankId": "bankId"
+}
+
+```
