@@ -56,7 +56,7 @@ example JSON:
 Response: 
 
 {
-    "id": 1,
+    "id": "id",
     "created": "2020-12-12 00:00:00.000",
     "updated": null,
     "name": "Public joint stock companies",
