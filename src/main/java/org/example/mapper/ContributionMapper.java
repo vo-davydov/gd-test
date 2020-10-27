@@ -45,9 +45,12 @@ public class ContributionMapper {
         contributionDto.setOpenDate(contribution.getOpenDate());
         contributionDto.setPercent(contribution.getPercent());
         contributionDto.setPeriodInMonth(contribution.getPeriodInMonth());
-        contributionDto.setClientId(contribution.getClient().getId());
-        contributionDto.setBankId(contribution.getBank().getId());
-
+        if (contribution.getClient() != null) {
+            contributionDto.setClientId(contribution.getClient().getId());
+        }
+        if (contribution.getClient() != null) {
+            contributionDto.setBankId(contribution.getBank().getId());
+        }
         return contributionDto;
     }
 }

@@ -1,8 +1,10 @@
 package org.example.service;
 
 import org.example.dto.ClientDto;
+import org.example.entity.Client;
 import org.example.mapper.ClientMapper;
 import org.example.repository.ClientRepository;
+import org.example.repository.ContributionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -40,6 +42,12 @@ public class ClientService {
     }
 
     public void deleteById(Long id) {
+        Client client = repository.getOne(id);
+
+        client.getContributions().forEach(c->{
+            c.setClient(null);
+        });
+
         repository.deleteById(id);
     }
 

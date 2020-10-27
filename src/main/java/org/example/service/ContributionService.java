@@ -2,7 +2,12 @@ package org.example.service;
 
 import org.example.dto.ClientDto;
 import org.example.dto.ContributionDto;
+import org.example.entity.Bank;
+import org.example.entity.Client;
+import org.example.entity.Contribution;
 import org.example.mapper.ContributionMapper;
+import org.example.repository.BankRepository;
+import org.example.repository.ClientRepository;
 import org.example.repository.ContributionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -19,11 +24,16 @@ import java.util.List;
 public class ContributionService {
     private final ContributionRepository repository;
     private final ContributionMapper mapper;
+    private final BankRepository bankRepository;
+    private final ClientRepository clientRepository;
 
     @Autowired
-    public ContributionService(ContributionRepository repository, ContributionMapper mapper) {
+    public ContributionService(ContributionRepository repository, ContributionMapper mapper,
+                               BankRepository bankRepository, ClientRepository clientRepository) {
         this.repository = repository;
         this.mapper = mapper;
+        this.bankRepository = bankRepository;
+        this.clientRepository = clientRepository;
     }
 
     public ContributionDto save(ContributionDto dto) {
@@ -41,6 +51,11 @@ public class ContributionService {
     }
 
     public void deleteById(Long id) {
+        Contribution contribution = repository.getOne(id);
+        Bank bank = bankRepository.getOne(contribution.getBank().getId());
+        Client client = clientRepository.getOne(contribution.getClient().getId());
+        bank.getContributions().remove(contribution);
+        client.getContributions().remove(contribution);
         repository.deleteById(id);
     }
 

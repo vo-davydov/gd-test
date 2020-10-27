@@ -1,6 +1,7 @@
 package org.example.service;
 
 import org.example.dto.BankDto;
+import org.example.entity.Bank;
 import org.example.mapper.BankMapper;
 import org.example.repository.BankRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,10 @@ public class BankService {
     }
 
     public void deleteById(Long id) {
+        Bank bank = repository.getOne(id);
+        bank.getContributions().forEach(c -> {
+            c.setBank(null);
+        });
         repository.deleteById(id);
     }
 
