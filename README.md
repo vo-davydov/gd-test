@@ -32,6 +32,25 @@ GET http://localhost:8080/api/contribution?page=0&size=10&sort=asc
 GET http://localhost:8080/api/okopf?page=0&size=10&sort=asc
 ```
 
+## Retrieve a paginated list (default sort value is "DESC") find by attribute
+
+```
+client attributs (name, inn, shortName, address, okopf)
+example:
+
+GET http://localhost:8080/api/client/search?name=Exxon
+
+bank attributs (name, BIK)
+example:
+
+GET http://localhost:8080/api/bank/search?BIK=12344
+
+okopf attributs (name, code)
+example:
+
+GET http://localhost:8080/api/okopf/search?code=4422
+```
+
 ## Delete object by id
 
 ```
