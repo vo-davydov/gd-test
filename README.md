@@ -112,6 +112,8 @@ Response:
 ## Create a client resource
 
 ```
+POST http://localhost:8080/api/client
+
 {
     "name": "Exxon Oil",
     "inn": 7708004769,
@@ -154,6 +156,8 @@ Response:
 ## Create a bank resource
 
 ```
+POST http://localhost:8080/api/bank
+
 {
     "bik": "044525221",
     "name": "Chase Bank"
@@ -188,6 +192,8 @@ Response:
 
 
 ```
+POST http://localhost:8080/api/contribution
+
 {
     "openDate": "2020-07-07",
     "percent": 8,
